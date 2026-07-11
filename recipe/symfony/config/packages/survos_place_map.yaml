@@ -1,0 +1,4 @@
+survos_place_map:
+    nominatim_user_agent: '%env(default::PLACE_MAP_USER_AGENT)%'
+    # tile_url / tile_attribution default to standard OpenStreetMap tiles — override
+    # for a different (e.g. self-hosted) tile provider.

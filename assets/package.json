@@ -1,0 +1,33 @@
+{
+  "name": "@survos/place-map-bundle",
+  "description": "Stimulus companion to Symfony UX Map: clustered, thumbnail-on-zoom item markers for survos/place-map-bundle",
+  "keywords": [
+    "symfony-ux"
+  ],
+  "license": "MIT",
+  "version": "1.0.0",
+  "symfony": {
+    "controllers": {
+      "place-map-enhance": {
+        "main": "controllers/place_map_enhance_controller.js",
+        "webpackMode": "eager",
+        "fetch": "lazy",
+        "enabled": true,
+        "autoimport": {
+          "leaflet.markercluster/dist/MarkerCluster.min.css": true,
+          "leaflet.markercluster/dist/MarkerCluster.Default.css": true
+        }
+      }
+    }
+  },
+  "peerDependencies": {
+    "@hotwired/stimulus": "^3.2.0",
+    "leaflet": "^1.9.4"
+  },
+  "dependencies": {
+    "leaflet.markercluster": "^1.5.3"
+  },
+  "devDependencies": {
+    "@hotwired/stimulus": "^3.2.2"
+  }
+}

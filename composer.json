@@ -1,0 +1,39 @@
+{
+    "name": "survos/place-map-bundle",
+    "description": "Open-source place library (OpenStreetMap point/polygon places) + Symfony UX Map integration: clustered, thumbnail-on-zoom item markers",
+    "keywords": ["symfony", "symfony-ux", "map", "leaflet", "openstreetmap", "geo"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tac Tacelosky",
+            "email": "tacman@gmail.com"
+        }
+    ],
+    "type": "symfony-bundle",
+    "require": {
+        "php": "^8.5",
+        "symfony/config": "^8.1",
+        "symfony/console": "^8.1",
+        "symfony/dependency-injection": "^8.1",
+        "symfony/framework-bundle": "^8.1",
+        "symfony/http-client": "^8.1",
+        "symfony/http-kernel": "^8.1",
+        "doctrine/orm": "^3.6",
+        "survos/kit-bundle": "^2.5",
+        "symfony/ux-map": "^3.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^13.0",
+        "symfony/test-pack": "^1.0"
+    },
+    "suggest": {
+        "survos/imgproxy-bundle": "Server-side signed thumbnail URLs for map markers (falls back to raw source URLs without it).",
+        "symfony/ux-leaflet-map": "The Leaflet/OpenStreetMap renderer bridge for symfony/ux-map — this bundle's assets (assets/controllers/place_map_enhance_controller.js) are written against it."
+    },
+    "autoload": {
+        "psr-4": {
+            "Survos\\PlaceMapBundle\\": "src/",
+            "Survos\\PlaceMapBundle\\Tests\\": "tests/"
+        }
+    }
+}
