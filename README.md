@@ -13,6 +13,7 @@ This bundle deliberately does **not** ship its own map component or its own Leaf
 - Doctrine ORM (ships the `Place` entity)
 - The consuming app must itself require `symfony/ux-map` + a renderer bridge. This bundle's JS is written against **`symfony/ux-leaflet-map`** specifically (it grabs the raw Leaflet map/`L` instance off `ux-map`'s own `connect` event) — a different renderer bridge (e.g. Google Maps) will not work with the enhancement controller, though the `Place` library / `PlaceMapBuilder` value-object conversion is renderer-agnostic.
 - `survos/imgproxy-bundle` — **optional**. When installed, item thumbnails are signed imgproxy URLs (preset `tiny`); without it, `PlaceMapBuilder::resolveThumb()` passes the source URL through unchanged.
+- on par in features/functionality with https://feature-map-google--fortepan.netlify.app/hu/map/?gc=46.7624,17.2513&gz=15
 
 ## Why this split (and not a bespoke Leaflet wrapper)
 
