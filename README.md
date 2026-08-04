@@ -103,12 +103,17 @@ final class GenevaMapController extends AbstractController
 
 `Place` (table `place_map_place`): `code` (PK), `label`, `lat`/`lng` (nullable), `geojson` (nullable — a GeoJSON `Polygon`/`MultiPolygon`), `boundingBox` (nullable `[south, north, west, east]`, cheap for map fit-bounds without parsing `geojson`), `source`/`sourceId` (provenance, e.g. `osm` / `relation/1685488`), `meta` (free-form, e.g. OSM's `display_name`/address parts).
 
-## Related: `survos/geonames-bundle`
+## Related bundles
 
 This bundle imports and renders individual OSM/Nominatim places one query at a time (`place:import
-"<query>"`) — a curated point/polygon library, not a name-resolution authority. For resolving country
-→ admin region → city hierarchies from free text, including locale-specific alternate names (e.g.
-German "Wien" vs. French "Vienne" for the same city), see the companion
-[`survos/geonames-bundle`](../geonames-bundle) instead — SQLite-backed, no ORM, a different tool for
-a different layer of the same "what place is this?" problem. See
-[survos/mono#28](https://github.com/survos/mono/issues/28) for how the split was decided.
+"<query>"`) — a curated point/polygon library, not a name-resolution authority or a bulk matcher.
+Two companions cover the rest of the "what place is this?" problem:
+
+- [`survos/geonames-bundle`](../geonames-bundle) — country → admin region → city hierarchies from
+  free text, including locale-specific alternate names (e.g. German "Wien" vs. French "Vienne" for
+  the same city). SQLite-backed, no ORM.
+- [`survos/poi-bundle`](../poi-bundle) — bulk/automated matching of a literal name against OSM
+  features within a bounding box (e.g. matching a photo caption's place tag to a specific church or
+  school), rather than one deliberately-chosen place at a time.
+
+See [survos/mono#28](https://github.com/survos/mono/issues/28) for how the split was decided.
