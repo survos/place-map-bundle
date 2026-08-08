@@ -42,6 +42,24 @@ survos_place_map:
 PLACE_MAP_USER_AGENT="YourApp/1.0 (https://your-site.example; contact@your-site.example)"
 ```
 
+## Fetch strategy (cache/retry)
+
+`NominatimClient` fetches through `survos/fetch-bundle`'s `PersistentFetcherInterface`. This
+matters more here than for most APIs: Nominatim's usage policy caps unauthenticated use at
+**~1 request/second**, so caching isn't just a performance nicety, it's what keeps repeat
+`place:import` runs (e.g. re-importing during development) from tripping the rate limit at all.
+
+- **Cache:** keyed by the full request URL, cached **forever** in a SQLite pool at
+  `var/data/fetch_cache.db` — until `forget()`/`force_fetch`. Re-running `place:import` for the
+  same query never re-hits Nominatim.
+- **Retry:** up to 5 attempts, full-jitter exponential backoff (200ms base, 10s cap), on
+  transport errors, HTTP 429, and 5xx.
+
+If a place import looks stuck on stale data, check the fetch-bundle cache pool before assuming
+Nominatim's data changed — `forget()` the specific query URL to force a fresh lookup.
+
+Before 2026-08-08 this used a raw `HttpClientInterface` with no caching at all.
+
 ## Usage
 
 Build `ux-map` value objects from the place library with `PlaceMapBuilder`, then render with `ux_map()`. Add the enhancement controller to the **same element** via the `attributes` array so it can merge onto `ux-map`'s own `data-controller` and listen for its `ux:map:connect` event:
