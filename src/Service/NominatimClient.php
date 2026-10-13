@@ -31,7 +31,7 @@ final class NominatimClient
      */
     public function search(string $query): ?array
     {
-        $url = $this->baseUrl . '/search?' . http_build_query([
+        $url = $this->baseUrl.'/search?'.http_build_query([
             'q' => $query,
             'format' => 'jsonv2',
             'polygon_geojson' => 1,

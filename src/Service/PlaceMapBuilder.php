@@ -33,15 +33,15 @@ final class PlaceMapBuilder
 
     public function polygonFor(Place $place): ?Polygon
     {
-        if ($place->geojson === null) {
+        if (null === $place->geojson) {
             return null;
         }
 
-        $rings = $place->geojson['type'] === 'MultiPolygon'
+        $rings = 'MultiPolygon' === $place->geojson['type']
             ? ($place->geojson['coordinates'][0] ?? [])
             : ($place->geojson['coordinates'] ?? []);
         $outer = $rings[0] ?? [];
-        if ($outer === []) {
+        if ([] === $outer) {
             return null;
         }
 
@@ -55,7 +55,7 @@ final class PlaceMapBuilder
 
     public function markerFor(Place $place): ?Marker
     {
-        if ($place->lat === null || $place->lng === null) {
+        if (null === $place->lat || null === $place->lng) {
             return null;
         }
 
@@ -63,14 +63,14 @@ final class PlaceMapBuilder
             position: new Point($place->lat, $place->lng),
             title: $place->label,
             icon: Icon::svg(self::PLACE_SVG),
-            id: 'place:' . $place->code,
+            id: 'place:'.$place->code,
         );
     }
 
     /** Signs a source image URL through imgproxy (preset "tiny"); passthrough when imgproxy-bundle isn't installed. */
     public function resolveThumb(?string $sourceUrl): ?string
     {
-        if ($sourceUrl === null || $sourceUrl === '') {
+        if (null === $sourceUrl || '' === $sourceUrl) {
             return null;
         }
 

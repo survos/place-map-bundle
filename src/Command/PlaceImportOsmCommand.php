@@ -35,8 +35,9 @@ final class PlaceImportOsmCommand
         #[Option('Label to store (default: OSM display name)')] ?string $label = null,
     ): int {
         $result = $this->nominatim->search($query);
-        if ($result === null) {
+        if (null === $result) {
             $io->error(sprintf('No OpenStreetMap result for "%s".', $query));
+
             return Command::FAILURE;
         }
 
@@ -60,7 +61,7 @@ final class PlaceImportOsmCommand
             : null;
 
         $bbox = $result['boundingbox'] ?? null;
-        $place->boundingBox = is_array($bbox) && count($bbox) === 4
+        $place->boundingBox = is_array($bbox) && 4 === count($bbox)
             ? array_map(static fn (mixed $v): float => (float) $v, array_values($bbox))
             : null;
 
@@ -73,7 +74,7 @@ final class PlaceImportOsmCommand
             $place->label,
             $place->lat,
             $place->lng,
-            $place->geojson !== null ? sprintf(' + %s boundary', $place->geojson['type']) : ' (point only, no boundary)',
+            null !== $place->geojson ? sprintf(' + %s boundary', $place->geojson['type']) : ' (point only, no boundary)',
         ));
 
         return Command::SUCCESS;
@@ -83,6 +84,6 @@ final class PlaceImportOsmCommand
     {
         $slug = strtolower(trim((string) preg_replace('/[^A-Za-z0-9]+/', '-', $value), '-'));
 
-        return $slug !== '' ? $slug : 'place';
+        return '' !== $slug ? $slug : 'place';
     }
 }
