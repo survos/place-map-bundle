@@ -18,6 +18,7 @@
         "symfony/framework-bundle": "^8.1",
         "symfony/http-kernel": "^8.1",
         "doctrine/orm": "^3.7",
+        "survos/image-contracts": "^2.5",
         "survos/kit-bundle": "^2.5",
         "survos/fetch-bundle": "^2.5",
         "symfony/ux-map": "^3.2"
@@ -27,7 +28,8 @@
         "symfony/test-pack": "^1.0"
     },
     "suggest": {
-        "survos/imgproxy-bundle": "Server-side signed thumbnail URLs for map markers (falls back to raw source URLs without it).",
+        "survos/imgproxy-bundle": "Server-side signed thumbnail URLs for map markers, or survos/imagor-bundle (falls back to raw source URLs without either).",
+        "survos/imagor-bundle": "Alternative image backend to survos/imgproxy-bundle.",
         "symfony/ux-leaflet-map": "The Leaflet/OpenStreetMap renderer bridge for symfony/ux-map — this bundle's assets (assets/controllers/place_map_enhance_controller.js) are written against it."
     },
     "autoload": {

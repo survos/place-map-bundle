@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Survos\PlaceMapBundle\Service;
 
-use Survos\ImgproxyBundle\Service\ImgproxyUrlBuilder;
+use Survos\ImageContracts\ImageUrlBuilderInterface;
 use Survos\PlaceMapBundle\Entity\Place;
 use Symfony\UX\Map\Icon\Icon;
 use Symfony\UX\Map\Marker;
@@ -27,7 +27,7 @@ final class PlaceMapBuilder
     private const PLACE_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><circle cx="8" cy="8" r="6" fill="#d97706" stroke="#fff" stroke-width="2"/></svg>';
 
     public function __construct(
-        private readonly ?ImgproxyUrlBuilder $imgproxy = null,
+        private readonly ?ImageUrlBuilderInterface $imageUrls = null,
     ) {
     }
 
@@ -67,13 +67,13 @@ final class PlaceMapBuilder
         );
     }
 
-    /** Signs a source image URL through imgproxy (preset "tiny"); passthrough when imgproxy-bundle isn't installed. */
+    /** A source image URL through the image backend (preset "tiny"); passthrough when neither imgproxy- nor imagor-bundle is installed. */
     public function resolveThumb(?string $sourceUrl): ?string
     {
         if (null === $sourceUrl || '' === $sourceUrl) {
             return null;
         }
 
-        return $this->imgproxy?->resizePreset($sourceUrl, 'tiny') ?? $sourceUrl;
+        return $this->imageUrls?->preset($sourceUrl, 'tiny') ?? $sourceUrl;
     }
 }

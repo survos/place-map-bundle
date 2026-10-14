@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Survos\PlaceMapBundle;
 
-use Survos\ImgproxyBundle\Service\ImgproxyUrlBuilder;
+use Survos\ImageContracts\ImageUrlBuilderInterface;
 use Survos\Kit\AbstractUxBundle;
 use Survos\Kit\SurvosKitBundle;
 use Survos\Kit\Traits\HasDoctrineEntities;
@@ -62,8 +62,8 @@ final class SurvosPlaceMapBundle extends AbstractUxBundle
             ->setPublic(false);
 
         $builder->autowire(PlaceMapBuilder::class)
-            // imgproxy-bundle is optional — null when absent (falls back to raw source URLs).
-            ->setArgument('$imgproxy', new Reference(ImgproxyUrlBuilder::class, ContainerInterface::NULL_ON_INVALID_REFERENCE))
+            // An image backend (imgproxy- or imagor-bundle) is optional — null when absent (raw source URLs).
+            ->setArgument('$imageUrls', new Reference(ImageUrlBuilderInterface::class, ContainerInterface::NULL_ON_INVALID_REFERENCE))
             ->setPublic(true);
     }
 }
